@@ -29,7 +29,7 @@ export const run = async ({
   if (toolPath) {
     core.addPath(toolPath)
   } else {
-    core.info(`Downloading contentful cli ${versionName} from ${tarballUrl}...`)
+    core.info(`Downloading contentful cli ${versionName} from ${downloadUrl}...`)
     const zipPath = await toolCache.downloadTool(downloadUrl)
     const extractedPath = await toolCache.extractZip(zipPath)
     const cachedPath = await toolCache.cacheDir(extractedPath, 'contentful', versionName)

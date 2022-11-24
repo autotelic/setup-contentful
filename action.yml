@@ -5,6 +5,11 @@ runs:
   using: node16
   main: dist/index.js
 inputs:
+  githubToken:
+    description: |-
+      Github access token, needed to fetch release info from API.
+      Can be set using the action-provided secrets.GITHUB_TOKEN
+    required: true
   version:
     description: |-
       Version of the contentful CLI to install. If unspecified or set to "latest",
