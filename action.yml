@@ -1,0 +1,13 @@
+name: Set up contentful cli
+description: Installs the contentful CLI tool
+author: Autotelic
+runs:
+  using: node16
+  main: dist/index.js
+inputs:
+  version:
+    description: |-
+      Version of the contentful CLI to install. If unspecified or set to "latest",
+      the latest version for the target platform will be installed. Example: "v1.16.8".
+    default: latest
+    required: false
