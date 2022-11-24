@@ -22,23 +22,19 @@ export const run = async ({
   }
 
   const { data: release } = await octokit.rest.repos[getReleaseMethod](getReleaseArgs)
-  const {
-    tarball_url: tarballUrl,
-    name: versionName
-  } = release
+  const { assets, name: versionName } = release
+  const { browser_download_url: downloadUrl } = assets.find(({ name }) => name.includes('linux'))
 
   const toolPath = toolCache.find('contentful', versionName)
   if (toolPath) {
     core.addPath(toolPath)
   } else {
     core.info(`Downloading contentful cli ${versionName} from ${tarballUrl}...`)
-    const tarPath = await toolCache.downloadTool(tarballUrl)
-    const extractedPath = await toolCache.extractTar(tarPath)
+    const zipPath = await toolCache.downloadTool(downloadUrl)
+    const extractedPath = await toolCache.extractZip(zipPath)
     const cachedPath = await toolCache.cacheDir(extractedPath, 'contentful', versionName)
     core.addPath(cachedPath)
   }
 
   core.info(`contentful cli ${versionName} is installed`)
-
-
 }
