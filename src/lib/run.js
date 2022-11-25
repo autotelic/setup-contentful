@@ -28,13 +28,14 @@ export const run = async ({
   const toolPath = toolCache.find('contentful', versionName)
   if (toolPath) {
     core.addPath(toolPath)
+    core.setOutput('contentfulPath', toolPath)
   } else {
     core.info(`Downloading contentful cli ${versionName} from ${downloadUrl}...`)
     const zipPath = await toolCache.downloadTool(downloadUrl)
-    const executablePath = '/usr/local/bin'
-    const extractedPath = await toolCache.extractZip(zipPath, executablePath)
+    const extractedPath = await toolCache.extractZip(zipPath)
     const cachedPath = await toolCache.cacheDir(extractedPath, 'contentful', versionName)
     core.addPath(cachedPath)
+    core.setOutput('contentfulPath', cachedPath)
   }
 
   core.info(`contentful cli ${versionName} is installed`)
